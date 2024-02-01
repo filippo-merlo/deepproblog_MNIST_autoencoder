@@ -141,7 +141,6 @@ class Network(object):
             self.device = torch.device("mps")
             self.network_module.cuda(device)
             print("Moving ", self.name, " to GPU")
-            
         elif torch.cuda.is_available():
             self.is_cuda = True
             self.device = device

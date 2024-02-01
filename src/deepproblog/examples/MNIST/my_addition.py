@@ -20,14 +20,13 @@ name = "addition_{}_{}".format(method, N)
 train_set = addition(N, "train")
 test_set = addition(N, "test")
 
-
 network = MNIST_Net()
 
 pretrain = 0
 if pretrain is not None and pretrain > 0:
     network.load_state_dict(torch.load("models/pretrained/all_{}.pth".format(pretrain)))
 net = Network(network, "mnist_net", batching=True)
-net.cuda()
+net = net.cuda()
 net.optimizer = torch.optim.Adam(network.parameters(), lr=1e-3)
 
 model = Model("models/addition.pl", [net])
