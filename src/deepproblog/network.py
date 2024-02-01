@@ -137,7 +137,12 @@ class Network(object):
         Mode the network to a cuda device if CUDA is available.
         :param device:  The cuda device to move the network to.
         """
-        if torch.cuda.is_available():
+        if torch.backends.mps.is_available() and torch.backends.mps.is_built():
+            self.device = torch.device("mps")
+            self.network_module.cuda(device)
+            print("Moving ", self.name, " to GPU")
+            
+        elif torch.cuda.is_available():
             self.is_cuda = True
             self.device = device
             self.network_module.cuda(device)
